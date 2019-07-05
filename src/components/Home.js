@@ -9,7 +9,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    getTeamNames().then(teamNames => this.setState(() => ({ teamNames })));
+    getTeamNames().then(teamNames => this.setState({ teamNames }));
   }
 
   render() {
