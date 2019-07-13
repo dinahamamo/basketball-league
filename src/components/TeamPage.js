@@ -8,6 +8,7 @@ import slug from "slug";
 export default class TeamPage extends Component {
   state = {
     loading: true,
+    teamNames: {},
     articles: []
   };
 
@@ -15,9 +16,13 @@ export default class TeamPage extends Component {
     Promise.all([
       getTeamNames(),
       getTeamsArticles(this.props.match.params.teamId)
-    ]).then(([teamNames, articles]) =>
-      this.setState({ articles, teamNames, loading: false })
-    );
+    ]).then(([teamNames, articles]) => {
+      this.setState(() => ({
+        teamNames,
+        articles,
+        loading: false
+      }));
+    });
   }
 
   render() {
@@ -72,9 +77,7 @@ export default class TeamPage extends Component {
                 <ul className="articles">
                   {articles.map(article => (
                     <li key={article.id}>
-                      <Link
-                        to={`/${match.url}/articles/${slug(article.title)}`}
-                      >
+                      <Link to={`${match.url}/articles/${slug(article.title)}`}>
                         <h4 className="article-title">{article.title}</h4>
                         <div className="article-date">
                           {article.date.toLocaleDateString()}
